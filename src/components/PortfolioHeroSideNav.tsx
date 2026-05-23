@@ -38,8 +38,8 @@ export function PortfolioHeroSideNav({
 }: PortfolioHeroSideNavProps) {
   return (
     <>
-      {/* Left Rail: Logo */}
-      <div className="pointer-events-none fixed left-6 top-1/2 z-40 hidden -translate-y-40 md:flex md:flex-col md:items-center lg:left-8 xl:left-12">
+      {/* Top-left pinned logo (visible on md+) — aligns with social rail left offsets */}
+      <div className="pointer-events-none fixed left-6 top-4 z-50 hidden md:flex md:items-start lg:left-8 xl:left-12">
         <a
           href="#"
           aria-label="home"

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-export function Logo({ size = 84, interactive = false }: { size?: number; interactive?: boolean }) {
+export function Logo({ size = 20, interactive = false, className = "", style, }: { size?: number; interactive?: boolean; className?: string; style?: React.CSSProperties }) {
   const [hovered, setHovered] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const leaveTimer = useRef<number | null>(null);
@@ -52,7 +52,8 @@ export function Logo({ size = 84, interactive = false }: { size?: number; intera
       height={size}
       viewBox="0 0 84 96"
       fill="none"
-      className={logoStateClass}
+      className={[logoStateClass, className].filter(Boolean).join(" ")}
+      style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

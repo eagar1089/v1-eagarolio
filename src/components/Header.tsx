@@ -90,6 +90,21 @@ export function Header({ revealed }: { revealed: boolean }) {
     <header className="site-header" style={{ transform: hidden && !menuOpen ? "translateY(-104%)" : "translateY(0)" }}>
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
 
+      {/* Top-left pinned logo: aligns with the left social rail */}
+      <div className="pointer-events-none fixed left-6 top-4 z-50 hidden md:flex md:items-start lg:left-8 xl:left-12">
+        <a
+          href="#"
+          aria-label="home"
+          className="pointer-events-auto block transition-transform duration-700"
+          style={{
+            transform: revealed ? "scale(1)" : "scale(0)",
+            opacity: revealed ? 1 : 0,
+          }}
+        >
+          <Logo size={42} interactive />
+        </a>
+      </div>
+
       <div
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
@@ -102,17 +117,8 @@ export function Header({ revealed }: { revealed: boolean }) {
         }}
       >
       <nav className="h-full flex items-center justify-between px-6 md:px-12 max-w-400 mx-auto">
-        <a
-          href="#"
-          aria-label="home"
-          className="block transition-transform duration-700"
-          style={{
-            transform: revealed ? "scale(1)" : "scale(0)",
-            opacity: revealed ? 1 : 0,
-          }}
-        >
-          <Logo size={42} interactive />
-        </a>
+        {/* logo moved to a fixed top-left position to align with social rail */}
+        <h1 className="sr-only">Sagar Parab - Software Engineer</h1>
 
         <ol className="hidden md:flex items-center gap-2">
           {navItems.map((item, i) => (
