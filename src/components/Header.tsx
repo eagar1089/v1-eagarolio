@@ -131,14 +131,8 @@ export function Header({ revealed }: { revealed: boolean }) {
                 opacity: revealed ? undefined : 0,
               }}
             >
-              <a
-                href={item.href}
-                className="px-3 py-2 text-sm transition-colors"
-                style={{ fontFamily: "var(--font-mono)", color: "var(--heading)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--heading)")}
-              >
-                <span style={{ color: "var(--accent)" }} className="mr-1">{item.num}.</span>
+              <a href={item.href} className="nav-link">
+                <span className="nav-num">{item.num}.</span>
                 {item.label}
               </a>
             </li>
@@ -214,10 +208,9 @@ export function Header({ revealed }: { revealed: boolean }) {
               <a
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-xl"
-                style={{ fontFamily: "var(--font-mono)", color: "var(--heading)" }}
+                className="nav-link text-xl flex-col items-center gap-1"
               >
-                <div style={{ color: "var(--accent)" }} className="text-sm mb-1">{item.num}.</div>
+                <span className="nav-num text-sm">{item.num}.</span>
                 {item.label}
               </a>
             </li>

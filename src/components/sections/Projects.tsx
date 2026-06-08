@@ -8,25 +8,25 @@ gsap.registerPlugin(ScrollTrigger);
 const PROJECTS = [
   {
     id: 1,
-    title: "IoT Production Tracker",
-    description:
-      "Prototype for a simple production line monitor that ingests sensor data and visualizes key metrics. I helped implement MQTT ingestion and worked on dashboard components.",
-    details: "Contributed MQTT ingestion and dashboard UI | learning observability patterns",
-    tech: ["Node.js", "MQTT", "InfluxDB", "React", "Grafana"],
-    github: "https://github.com/eagar1089",
-    live: "#",
-    image: "https://placehold.co/600x400?text=IoT+Production+Tracker",
-  },
-  {
-    id: 2,
     title: "Digital MemoryJar",
     description:
       "A small full‑stack app for capturing shared memories (text, photos, voice notes). I built the timeline UI and worked on backend endpoints and S3 image uploads.",
     details: "Built timeline UI and S3 uploads | learning serverless processing",
     tech: ["React", "Express", "MongoDB", "AWS S3"],
-    github: "https://github.com/eagar1089",
+    github: "https://github.com/eagar1089/Digital-MemoryJar",
     live: "#",
-    image: "https://placehold.co/600x400?text=Digital+MemoryJar",
+    image: "https://opengraph.githubassets.com/1/eagar1089/Digital-MemoryJar",
+  },
+  {
+    id: 2,
+    title: "IoT Production Tracker",
+    description:
+      "Prototype for a simple production line monitor that ingests sensor data and visualizes key metrics. I helped implement MQTT ingestion and worked on dashboard components.",
+    details: "Contributed MQTT ingestion and dashboard UI | learning observability patterns",
+    tech: ["Node.js", "MQTT", "InfluxDB", "React", "Grafana"],
+    github: "https://github.com/eagar1089/IoT-Production-Tracker",
+    live: "#",
+    image: "https://opengraph.githubassets.com/1/eagar1089/IoT-Production-Tracker",
   },
   {
     id: 3,
@@ -77,6 +77,33 @@ const ExternalIcon = () => (
   </svg>
 );
 
+/** Smooth 0→1 ease for focus falloff */
+function smoothstep(t: number) {
+  const c = Math.max(0, Math.min(1, t));
+  return c * c * (3 - 2 * c);
+}
+
+/** Per-card transform targets from scroll stack position */
+function cardMotion(distance: number) {
+  const abs = Math.abs(distance);
+  const focus = smoothstep(1 - abs * 0.92);
+  return {
+    opacity: Math.max(0, 1 - abs * 1.05),
+    y: distance * 128,
+    scale: 0.9 + focus * 0.1,
+    rotateX: distance * -2.8,
+    blur: abs < 0.12 ? 0 : Math.min(5, abs * 3.2),
+  };
+}
+
+type CardQuickTweens = {
+  y: gsap.QuickToFunc;
+  opacity: gsap.QuickToFunc;
+  scale: gsap.QuickToFunc;
+  rotateX: gsap.QuickToFunc;
+  filter: gsap.QuickToFunc;
+};
+
 interface ProjectCardProps {
   project: (typeof PROJECTS)[0];
   index: number;
@@ -85,7 +112,7 @@ interface ProjectCardProps {
 function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <div
-      className="project-card glass"
+      className="project-card"
       data-index={index}
       style={{
         position: "absolute",
@@ -101,47 +128,47 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         flexDirection: "column",
       }}
     >
-      <div className="flex flex-col h-full gap-6">
-        {/* Header with Badge */}
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold" style={{ color: "var(--fg)" }}>
+      <div className="grid h-full gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8 lg:items-start">
+        <div className="flex min-w-0 flex-col gap-4">
+          {/* Header with Badge */}
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="card-title min-w-0 text-2xl font-bold leading-tight md:text-3xl lg:text-4xl">
               {project.title}
             </h3>
+            <div
+              className="text-xs md:text-sm px-3 py-1 rounded-full font-medium shrink-0"
+              style={{
+                background: "var(--gradient-accent)",
+                color: "#ffffff",
+                fontFamily: "var(--font-mono)",
+                border: "1px solid rgba(var(--accent-rgb), 0.4)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Project {index + 1}/{PROJECTS.length}
+            </div>
           </div>
-          <div
-            className="text-xs md:text-sm px-3 py-1 rounded-full font-medium"
-            style={{
-              backgroundColor: "rgba(var(--accent-rgb), 0.2)",
-              color: "var(--accent)",
-              fontFamily: "var(--font-mono)",
-              border: "1px solid rgba(var(--accent-rgb), 0.4)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Project {index + 1}/{PROJECTS.length}
-          </div>
-        </div>
 
-        {/* Image Section */}
-        <div className="relative overflow-hidden rounded-xl shrink-0" style={{ height: "32%", aspectRatio: "16 / 9" }}>
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover"
-            style={{
-              background: "linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%)",
-              transition: "transform 500ms cubic-bezier(0.33, 0.66, 0.66, 1)",
-            }}
-          />
-          <div className="card-dim" />
+          {/* Image Section */}
+          <div className="relative h-60 overflow-hidden rounded-xl lg:h-75">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+              style={{
+                background: "linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%)",
+                transition: "transform 500ms cubic-bezier(0.33, 0.66, 0.66, 1)",
+              }}
+            />
+            <div className="card-dim" />
+          </div>
         </div>
 
         {/* Content Section */}
-        <div className="flex-1 flex flex-col gap-4 pr-2 project-content">
+        <div className="flex min-w-0 flex-col gap-4 pr-0 lg:pt-2 lg:pr-2 project-content">
           {/* Description */}
           <div>
-            <p className="text-sm md:text-base leading-relaxed" style={{ color: "var(--fg)", opacity: 0.95 }}>
+            <p className="card-body text-sm md:text-base leading-relaxed">
               {project.description}
             </p>
           </div>
@@ -153,10 +180,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 
           {/* Tech Stack */}
           <div>
-            <p
-              className="text-xs md:text-sm mb-3 font-semibold"
-              style={{ color: "var(--fg)", opacity: 0.8 }}
-            >
+            <p className="card-title text-xs md:text-sm mb-3 font-semibold opacity-90">
               Tech Stack
             </p>
             <div className="flex flex-wrap gap-2">
@@ -165,10 +189,10 @@ function ProjectCard({ project, index }: ProjectCardProps) {
                   key={tech}
                   className="text-xs md:text-sm px-3 py-1.5 rounded-full transition-all duration-200 hover:shadow-lg"
                   style={{
-                    backgroundColor: "rgba(var(--accent-rgb), 0.15)",
-                    color: "var(--accent)",
+                    backgroundColor: "rgba(var(--accent-rgb), 0.13)",
+                    color: "var(--accent-fg)",
                     fontFamily: "var(--font-mono)",
-                    border: "1px solid rgba(var(--accent-rgb), 0.3)",
+                    border: "1px solid var(--border)",
                   }}
                 >
                   {tech}
@@ -179,25 +203,18 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Buttons Section */}
-        <div className="flex gap-3 shrink-0 flex-wrap pt-4 border-t border-opacity-20" style={{ borderColor: "var(--accent)" }}>
+        <div className="mt-auto flex flex-wrap gap-3 pt-4 border-t border-opacity-20" style={{ borderColor: "var(--accent)" }}>
           <a
             href={project.github}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 group"
+            target="_blank"
+            rel="noreferrer"
+            className="hover-arrow inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300"
             style={{
-              backgroundColor: "rgba(var(--accent-rgb), 0.1)",
-              color: "var(--accent)",
-              border: "1px solid rgba(var(--accent-rgb), 0.3)",
-              textDecoration: "none",
+              backgroundColor: "var(--accent)",
+              color: "#ffffff",
+              border: "1px solid var(--accent)",
               fontSize: "0.875rem",
               fontWeight: "500",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "rgba(var(--accent-rgb), 0.2)";
-              e.currentTarget.style.boxShadow = "0 4px 12px -4px rgba(100, 255, 218, 0.3)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "rgba(var(--accent-rgb), 0.1)";
-              e.currentTarget.style.boxShadow = "none";
             }}
           >
             <GithubIcon />
@@ -205,24 +222,15 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           </a>
           <a
             href={project.live}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300"
+            target="_blank"
+            rel="noreferrer"
+            className="hover-arrow inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300"
             style={{
-              backgroundColor: "var(--accent)",
-              color: "var(--navy)",
+              background: "var(--gradient-accent)",
+              color: "#ffffff",
               border: "1px solid var(--accent)",
-              textDecoration: "none",
               fontSize: "0.875rem",
               fontWeight: "600",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = "0.85";
-              e.currentTarget.style.boxShadow = "0 8px 24px -6px rgba(100, 255, 218, 0.4)";
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = "1";
-              e.currentTarget.style.boxShadow = "none";
-              e.currentTarget.style.transform = "translateY(0)";
             }}
           >
             <ExternalIcon />
@@ -241,6 +249,8 @@ export function Projects() {
   useEffect(() => {
     if (!stackContainerRef.current) return;
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".project-card");
       if (!cards.length) return;
@@ -248,77 +258,74 @@ export function Projects() {
       const cardCount = cards.length;
       const maxScrollStep = Math.max(1, cardCount - 1);
 
+      const quick: CardQuickTweens[] = cards.map((card) => ({
+        y: gsap.quickTo(card, "y", { duration: reducedMotion ? 0.12 : 0.52, ease: "power3.out" }),
+        opacity: gsap.quickTo(card, "opacity", { duration: reducedMotion ? 0.1 : 0.42, ease: "power2.out" }),
+        scale: gsap.quickTo(card, "scale", { duration: reducedMotion ? 0.12 : 0.5, ease: "power3.out" }),
+        rotateX: gsap.quickTo(card, "rotateX", { duration: reducedMotion ? 0.12 : 0.5, ease: "power3.out" }),
+        filter: gsap.quickTo(card, "filter", { duration: reducedMotion ? 0.1 : 0.38, ease: "power2.out" }),
+      }));
+
       gsap.set(cards, {
         position: "absolute",
         top: "50%",
         left: "50%",
         xPercent: -50,
         yPercent: -50,
+        transformOrigin: "50% 50%",
+        transformPerspective: 1200,
+        force3D: true,
         opacity: 0,
-        y: 90,
-        scale: 0.94,
-        willChange: "transform, opacity",
+        y: 100,
+        scale: 0.92,
+        rotateX: 0,
+        filter: "blur(0px)",
+        willChange: "transform, opacity, filter",
       });
 
-      // tuned stacking math with eased tweens for smoother bottom->center->top transitions
       const updateCards = (progress: number) => {
         const stackStep = progress * maxScrollStep;
 
         cards.forEach((card, index) => {
-          const distance = index - stackStep; // negative => above center, positive => below center
+          const distance = index - stackStep;
           const abs = Math.abs(distance);
+          const motion = cardMotion(distance);
+          const isFocused = abs < 0.38;
 
-          // opacity falls off for non-focused cards
-          const opacity = Math.max(0, 1 - abs * 1.2);
+          card.classList.toggle("is-focused", isFocused);
+          card.dataset.active = isFocused ? "true" : "false";
 
-          // vertical offset: stronger travel for clear motion (below -> up -> above)
-          const y = Math.round(distance * 180);
+          const zIndex = 2000 - Math.round(abs * 12) + (cardCount - index);
 
-          // scale: focused card slightly larger, others reduced
-          const scale = Math.max(0.88, 1 - Math.min(0.12, abs * 0.06));
+          if (reducedMotion) {
+            gsap.set(card, {
+              opacity: motion.opacity,
+              y: motion.y,
+              scale: motion.scale,
+              rotateX: 0,
+              filter: "none",
+              zIndex,
+            });
+          } else {
+            quick[index].y(motion.y);
+            quick[index].opacity(motion.opacity);
+            quick[index].scale(motion.scale);
+            quick[index].rotateX(motion.rotateX);
+            quick[index].filter(motion.blur > 0 ? `blur(${motion.blur}px)` : "blur(0px)");
+            gsap.set(card, { zIndex });
+          }
 
-          // zIndex: closest to center should be on top
-          const zIndex = 2000 - Math.round(abs * 10) + (cardCount - index);
-
-          // animate transforms for smoother interpolation
-          gsap.to(card, {
-            opacity,
-            y,
-            scale,
-            duration: 0.55,
-            ease: "power3.out",
-            overwrite: true,
-            willChange: "transform, opacity",
-          });
-
-          gsap.set(card, {
-            zIndex,
-            pointerEvents: opacity > 0.45 ? "auto" : "none",
-          });
+          card.style.pointerEvents = motion.opacity > 0.42 ? "auto" : "none";
         });
       };
 
-      // initial state (kept subtle)
-      gsap.set(cards, {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        xPercent: -50,
-        yPercent: -50,
-        opacity: 0,
-        y: 120,
-        scale: 0.94,
-        willChange: "transform, opacity",
-      });
-
-      // apply starting layout
       updateCards(0);
 
       const trigger = ScrollTrigger.create({
         trigger: stackContainerRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 0.45,
+        scrub: reducedMotion ? 0.08 : 0.28,
         invalidateOnRefresh: true,
         onUpdate: (self) => updateCards(self.progress),
       });
@@ -330,13 +337,17 @@ export function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="py-24" style={{ background: "transparent" }}>
+    <section id="projects" className="py-24 scroll-mt-24" style={{ background: "transparent" }}>
       <Reveal>
         <div className="max-w-280 mx-auto px-6 md:px-12 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: "var(--fg)" }}>
-            Recent Work
-          </h2>
-          <p style={{ color: "var(--fg-muted)" }} className="max-w-2xl text-base md:text-lg">
+          <div className="section-heading-row">
+            <h2 className="section-title text-3xl md:text-4xl mb-0">
+              <span className="font-mono text-accent-fg text-lg md:text-xl font-normal mr-2">03.</span>
+              Projects
+            </h2>
+            <span className="section-rule hidden sm:block" aria-hidden />
+          </div>
+          <p className="section-lead max-w-2xl text-base md:text-lg -mt-2">
             A selection of recent projects showcasing infrastructure design, DevOps solutions, and full-stack development.
           </p>
         </div>
@@ -360,7 +371,8 @@ export function Projects() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            perspective: "1200px",
+            perspective: "1400px",
+            transformStyle: "preserve-3d",
           }}
         >
           {PROJECTS.map((project, index) => (

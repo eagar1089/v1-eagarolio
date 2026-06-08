@@ -12,7 +12,7 @@ export function ThemeToggle() {
   ];
   return (
     <div
-      // className="glass inline-flex p-1 "
+      className="glass inline-flex p-1 gap-0.5"
       role="radiogroup"
       aria-label="Theme"
       style={{ fontFamily: "var(--font-mono)" }}
@@ -28,8 +28,9 @@ export function ThemeToggle() {
             className="px-3 py-1 text-xs rounded-full transition-all"
             style={{
               background: active ? "var(--gradient-accent)" : "transparent",
-              color: active ? "var(--bg)" : "var(--fg-muted)",
+              color: active ? "var(--text-on-accent)" : "var(--fg-muted)",
               fontWeight: active ? 600 : 400,
+              boxShadow: active ? "0 0 0 1px var(--accent)" : "none",
             }}
             title={o.label}
           >

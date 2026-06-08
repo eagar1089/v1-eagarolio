@@ -1,20 +1,27 @@
+import { HoverArrow } from "../HoverArrow";
 import { Reveal } from "../Reveal";
 
 export function About() {
   return (
     <>
-      {/* Premium Intro Section */}
-      <section className="py-24 bg-gradient-to-br from-transparent via-transparent to-transparent">
+      <section id="about" className="py-24 scroll-mt-24">
         <div className="max-w-280 mx-auto px-6 md:px-12">
           <Reveal>
-            <div className="max-w-3xl">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight" style={{ color: "var(--fg)" }}>
-                Practical engineering, learning every day.
+            <div className="section-heading-row">
+              <h2 className="section-title text-3xl md:text-4xl lg:text-5xl mb-0 leading-tight">
+                <span className="font-mono text-accent-fg text-lg md:text-xl font-normal mr-2">01.</span>
+                About
               </h2>
-              <p className="text-base md:text-lg mb-6 leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+              <span className="section-rule hidden sm:block" aria-hidden />
+            </div>
+            <div className="max-w-3xl -mt-4">
+              <p className="section-lead text-xl md:text-2xl font-medium text-body mb-6">
+                Practical engineering, learning every day.
+              </p>
+              <p className="section-lead text-base md:text-lg mb-6">
                 I’m a Linux administrator and BE CSE student with professional experience at Justdial Pvt. Ltd. from November 2021 to February 2024. Linux administration was my main role, and I also got opportunities to work on internal server monitoring dashboards, server inventory, live statistics fetching, and internal web tools.
               </p>
-              <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+              <p className="section-lead text-base md:text-lg">
                 I enjoy solving practical problems, improving reliability, and writing code that’s easy to understand and maintain. I’m currently in my final year of BE CSE and expected to pass out in June 2026, so I’m looking to grow with a team where I can keep learning and contribute meaningfully.
               </p>
             </div>
@@ -22,14 +29,17 @@ export function About() {
         </div>
       </section>
 
-      {/* Services/Benefits Grid */}
       <section className="py-24 max-w-280 mx-auto px-6 md:px-12">
         <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold mb-16" style={{ color: "var(--fg)" }}>
-            Skills
-          </h2>
+          <div className="section-heading-row">
+            <h2 className="section-title text-3xl md:text-4xl mb-0">
+              <span className="font-mono text-accent-fg text-lg md:text-xl font-normal mr-2">02.</span>
+              Skills
+            </h2>
+            <span className="section-rule hidden sm:block" aria-hidden />
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 -mt-2">
             {[
               {
                 title: "DevOps & Cloud (AWS)",
@@ -61,17 +71,9 @@ export function About() {
                   "Experience with relational and document databases for internal tools: writing queries, handling CRUD APIs, basic schema design, indexing, and backup-oriented workflows.",
               },
             ].map((service, i) => (
-              <div
-                key={i}
-                className="p-6 rounded-xl glass transition-all hover:border-accent/50"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <h3 className="text-lg font-semibold mb-3" style={{ color: "var(--fg)" }}>
-                  {service.title}
-                </h3>
-                <p style={{ color: "var(--fg-muted)" }} className="text-sm leading-relaxed">
-                  {service.description}
-                </p>
+              <div key={i} className="glass-card glass-card-interactive p-6">
+                <h3 className="card-title text-lg font-semibold mb-3 pr-8">{service.title}</h3>
+                <p className="card-body text-sm leading-relaxed">{service.description}</p>
               </div>
             ))}
           </div>

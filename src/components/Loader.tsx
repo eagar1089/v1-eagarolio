@@ -6,11 +6,11 @@ export function Loader({ onFinish }: { onFinish: () => void }) {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setFading(true), 2200);
+    const t1 = setTimeout(() => setFading(true), 2400);
     const t2 = setTimeout(() => {
       setHidden(true);
       onFinish();
-    }, 2800);
+    }, 3000);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -35,7 +35,7 @@ export function Loader({ onFinish }: { onFinish: () => void }) {
       }}
     >
       <div className="logo-wrapper">
-        <Logo size={120} />
+        <Logo size={128} intro />
       </div>
     </div>
   );

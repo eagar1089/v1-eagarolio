@@ -61,20 +61,20 @@ export function PortfolioHeroSideNav({
               target="_blank"
               rel="noreferrer"
               title={label}
-              className="group relative flex items-center justify-center transition-all duration-300 ease-out"
+              className="hover-arrow group relative flex items-center justify-center gap-1 transition-all duration-300 ease-out"
               style={{
-                color: "var(--fg-muted, rgba(204,214,246,0.62))",
+                color: "var(--fg-muted)",
                 width: "24px",
                 height: "24px",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.color = "var(--accent, #64ffda)";
-                e.currentTarget.style.textShadow = "0 0 10px var(--accent, #64ffda)";
+                e.currentTarget.style.color = "var(--accent-fg)";
+                e.currentTarget.style.textShadow = "0 0 10px var(--accent-fg)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.color = "var(--fg-muted, rgba(204,214,246,0.62))";
+                e.currentTarget.style.color = "var(--fg-muted)";
                 e.currentTarget.style.textShadow = "none";
               }}
             >
@@ -88,7 +88,7 @@ export function PortfolioHeroSideNav({
           className="absolute left-1/2 top-full mt-6 h-screen w-px"
           style={{
             transform: "translateX(-50%)",
-            background: "linear-gradient(to bottom, var(--border, rgba(168,178,209,0.12)), transparent)",
+            background: "linear-gradient(to bottom, var(--border, rgba(6, 90, 96, 0.35)), transparent)",
           }}
         />
       </div>
@@ -100,7 +100,7 @@ export function PortfolioHeroSideNav({
           className="absolute left-1/2 top-full mt-6 h-screen w-px"
           style={{
             transform: "translateX(-50%)",
-            background: "linear-gradient(to bottom, var(--border, rgba(168,178,209,0.12)), transparent)",
+            background: "linear-gradient(to bottom, var(--border, rgba(6, 90, 96, 0.35)), transparent)",
           }}
         />
 
@@ -108,7 +108,7 @@ export function PortfolioHeroSideNav({
           href={`mailto:${email}`}
           className="pointer-events-auto flex items-center justify-center text-[15px] font-light"
           style={{
-            color: "var(--fg-muted, rgba(204,214,246,0.62))",
+            color: "var(--fg-muted, #7ab8be)",
             writingMode: "vertical-rl",
             textOrientation: "mixed",
             letterSpacing: "0.15em",
@@ -121,7 +121,7 @@ export function PortfolioHeroSideNav({
 
           <span
             style={{
-              color: "var(--fg, #ccd6f6)",
+              color: "var(--fg)",
               opacity: 0.8,
             }}
           >
@@ -130,7 +130,7 @@ export function PortfolioHeroSideNav({
         </a>
       </div>
 
-      <style>{`@keyframes emailPulse { 0%, 100% {color: var(--fg-muted, rgba(204,214,246,0.62));text-shadow: 0 0 0px var(--accent, #64ffda);opacity: 0.7;} 50% {color: var(--fg, #ccd6f6);text-shadow: 0 0 8px var(--accent, #64ffda);opacity: 1; } }`}</style>
+      <style>{`@keyframes emailPulse { 0%, 100% {color: var(--fg-muted);text-shadow: 0 1px 3px rgba(0,0,0,0.4);opacity: 0.75;} 50% {color: var(--fg);text-shadow: 0 0 10px var(--accent-fg);opacity: 1; } }`}</style>
     </>
   );
 }

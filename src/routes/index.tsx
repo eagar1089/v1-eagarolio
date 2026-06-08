@@ -41,6 +41,8 @@ function Index() {
       <main
         id="content"
         style={{
+          position: "relative",
+          zIndex: 1,
           filter: loaded ? "blur(0px)" : "blur(6px)",
           transition: "filter 0.4s ease",
         }}
