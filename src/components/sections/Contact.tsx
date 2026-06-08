@@ -14,9 +14,6 @@ export function Contact() {
             <span className="section-rule hidden sm:block" aria-hidden />
           </div>
           <div className="glass-card glass-card-interactive mb-12 p-8 md:p-12 text-center -mt-2">
-            <h3 className="section-title text-2xl md:text-3xl mb-4">
-              Let’s Build Something Reliable Together
-            </h3>
             <p className="section-lead text-base md:text-lg mb-4 max-w-2xl mx-auto">
               Passionate about building scalable infrastructure, automating deployments, and improving system reliability.
             </p>
@@ -36,17 +33,6 @@ export function Contact() {
                 style={{ fontSize: "14px" }}
               >
                 Get In Touch
-                <HoverArrow size={13} />
-              </a>
-
-              <a
-                href="https://calendly.com/your-availability"
-                target="_blank"
-                rel="noreferrer"
-                className="hover-arrow btn-secondary glass px-5 py-3 rounded-lg transition-all"
-                style={{ fontSize: "14px" }}
-              >
-                Book a call
                 <HoverArrow size={13} />
               </a>
             </div>
