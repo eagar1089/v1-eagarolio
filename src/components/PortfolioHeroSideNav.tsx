@@ -1,4 +1,4 @@
-import { Github, Linkedin, Codepen } from "lucide-react";
+import { Github, Linkedin, Codepen, Mail } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeProvider";
@@ -38,99 +38,81 @@ export function PortfolioHeroSideNav({
 }: PortfolioHeroSideNavProps) {
   return (
     <>
-      {/* Top-left pinned logo (visible on md+) — aligns with social rail left offsets */}
-      <div className="pointer-events-none fixed left-6 top-4 z-50 hidden md:flex md:items-start lg:left-8 xl:left-12">
+      {/* Desktop logo */}
+      <div className="fixed left-6 top-5 z-50 hidden md:block">
+        <Logo />
+      </div>
+
+      {/* Desktop theme button */}
+      <div className="fixed right-6 top-5 z-50 hidden md:block">
+        <ThemeToggle />
+      </div>
+
+      {/* Desktop left social rail */}
+      <aside className="fixed bottom-0 left-6 z-40 hidden flex-col items-center gap-5 md:flex">
+        {socialLinks.map(({ label, href, icon: Icon }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={label}
+            className="text-slate-300 transition hover:-translate-y-1 hover:text-cyan-300"
+          >
+            <Icon width={21} height={21} />
+          </a>
+        ))}
+
+        <div className="h-24 w-px bg-slate-400/40" />
+      </aside>
+
+      {/* Desktop right email rail */}
+      <aside className="fixed bottom-0 right-6 z-40 hidden flex-col items-center gap-5 md:flex">
         <a
-          href="#"
-          aria-label="home"
-          className="pointer-events-auto block transition-transform duration-700"
-          title="Home"
+          href={`mailto:${email}`}
+          className="vertical-rl text-xs tracking-[0.28em] text-slate-300 transition hover:-translate-y-1 hover:text-cyan-300"
+          style={{ writingMode: "vertical-rl" }}
         >
-          <Logo size={42} interactive />
+          {email}
         </a>
-      </div>
 
-      {/* Left Side: Social Icons */}
-      <div className="pointer-events-none fixed left-6 top-1/2 z-40 hidden -translate-y-1/2 md:flex md:flex-col md:items-center lg:left-8 xl:left-12">
-        <div className="pointer-events-auto flex flex-col items-center gap-6">
-          {socialLinks.map(({ label, href, icon: Icon }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              target="_blank"
-              rel="noreferrer"
-              title={label}
-              className="hover-arrow group relative flex items-center justify-center gap-1 transition-all duration-300 ease-out"
-              style={{
-                color: "var(--fg-muted)",
-                width: "24px",
-                height: "24px",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.color = "var(--accent-fg)";
-                e.currentTarget.style.textShadow = "0 0 10px var(--accent-fg)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.color = "var(--fg-muted)";
-                e.currentTarget.style.textShadow = "none";
-              }}
-            >
-              <Icon className="h-5 w-5" strokeWidth={1.5} />
-            </a>
-          ))}
-        </div>
+        <div className="h-24 w-px bg-slate-400/40" />
+      </aside>
 
-        {/* Vertical line below icons */}
-        <div
-          className="absolute left-1/2 top-full mt-6 h-screen w-px"
-          style={{
-            transform: "translateX(-50%)",
-            background: "linear-gradient(to bottom, var(--border, rgba(6, 90, 96, 0.35)), transparent)",
-          }}
-        />
-      </div>
-
-      {/* Right Side: Email Navigation */}
-      <div className="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 md:flex md:items-center lg:right-8 xl:right-12">
-        {/* Vertical line beside email */}
-        <div
-          className="absolute left-1/2 top-full mt-6 h-screen w-px"
-          style={{
-            transform: "translateX(-50%)",
-            background: "linear-gradient(to bottom, var(--border, rgba(6, 90, 96, 0.35)), transparent)",
-          }}
-        />
+      {/* Mobile bottom social bar */}
+      <nav
+        className="
+          fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2
+          rounded-full border border-white/10 bg-slate-950/75 px-3 py-2
+          shadow-2xl shadow-black/30 backdrop-blur md:hidden
+        "
+        aria-label="Social links"
+      >
+        {socialLinks.map(({ label, href, icon: Icon }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={label}
+            className="grid h-10 w-10 place-items-center rounded-full text-slate-200 transition hover:bg-cyan-300/10 hover:text-cyan-300"
+          >
+            <Icon width={19} height={19} />
+          </a>
+        ))}
 
         <a
           href={`mailto:${email}`}
-          className="pointer-events-auto flex items-center justify-center text-[15px] font-light"
-          style={{
-            color: "var(--fg-muted, #7ab8be)",
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            letterSpacing: "0.15em",
-            animation: "emailPulse 2.5s ease-in-out infinite",
-            lineHeight: "1.2",
-            whiteSpace: "nowrap",
-          }}
-          title={email}
+          aria-label="Email"
+          className="grid h-10 w-10 place-items-center rounded-full text-slate-200 transition hover:bg-cyan-300/10 hover:text-cyan-300"
         >
-
-          <span
-            style={{
-              color: "var(--fg)",
-              opacity: 0.8,
-            }}
-          >
-            {email}
-          </span>
+          <Mail width={19} height={19} />
         </a>
-      </div>
 
-      <style>{`@keyframes emailPulse { 0%, 100% {color: var(--fg-muted);text-shadow: 0 1px 3px rgba(0,0,0,0.4);opacity: 0.75;} 50% {color: var(--fg);text-shadow: 0 0 10px var(--accent-fg);opacity: 1; } }`}</style>
+        <div className="grid h-10 w-10 place-items-center">
+          <ThemeToggle />
+        </div>
+      </nav>
     </>
   );
 }
