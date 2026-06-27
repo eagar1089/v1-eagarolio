@@ -1,33 +1,148 @@
-/* Legacy tokens — aligned with Coolors palette in styles.css */
-:root {
-  --c-bg: #212f45;
-  --c-cream: #e8f4f8;
-  --c-navy: #0b525b;
-  --c-ink: #8ec5ca;
-  --c-ink-body: #e8f4f8;
-  --c-ink-muted: #8ec5ca;
-  --c-forest: #006466;
-  --c-copper: #4d194d;
-  --c-burgundy: #3e1f47;
+/* ---------- Responsive Fixes for Portfolio ---------- */
 
-  --font-sans: 'Inter', 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+/* prevent horizontal scrolling on mobile */
+html,
 body {
-  margin: 0;
-  font-family: var(--font-sans);
-  line-height: 1.6;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-#root {
-  min-height: 100vh;
+/* responsive text and spacing */
+section {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+/* better tap size for buttons/links */
+a,
+button {
+  min-height: 44px;
+}
+
+/* phone layout fixes */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 13vw, 4rem) !important;
+    line-height: 0.95 !important;
+    word-break: break-word;
+  }
+
+  h2,
+  .section-title {
+    font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  h3,
+  .card-title {
+    font-size: clamp(1.25rem, 6vw, 1.8rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  p,
+  .section-lead,
+  .card-body {
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .section-heading-row {
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  .section-rule {
+    display: none !important;
+  }
+
+  /* make project stack normal cards on phone */
+  .projects-stack-container {
+    height: auto !important;
+    padding: 0 1rem 3rem !important;
+  }
+
+  .projects-stack-container > div {
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    perspective: none !important;
+    transform-style: flat !important;
+  }
+
+  .project-card {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 1rem !important;
+    border-radius: 18px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    pointer-events: auto !important;
+  }
+
+  .project-card > div {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    height: auto !important;
+  }
+
+  .project-card img {
+    height: 190px !important;
+    object-fit: cover !important;
+  }
+
+  .project-content {
+    padding-right: 0 !important;
+  }
+
+  .details {
+    font-size: 0.82rem !important;
+  }
+
+  .project-card a {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+/* tablet layout */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .project-card {
+    width: 92vw !important;
+    height: auto !important;
+    min-height: 72vh !important;
+    padding: 1.5rem !important;
+  }
+
+  .project-card img {
+    height: 260px !important;
+  }
+}
+
+/* desktop polish */
+@media (min-width: 1025px) {
+  .project-card {
+    width: min(85vw, 1200px) !important;
+  }
 }
